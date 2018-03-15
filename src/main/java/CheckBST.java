@@ -9,7 +9,7 @@ public class CheckBST {
         CheckBST client = new CheckBST();
 
 
-        System.out.println(client.checkBST(client.getTest2()));
+        System.out.println(client.checkBST(client.getTest3()));
     }
 
     Node getTest1() {
@@ -82,6 +82,43 @@ public class CheckBST {
     }
 
 
+
+    Node getTest3() {
+
+        Node root = new Node();
+        root.data = 4;
+        Node left = new Node();
+        left.data = 2;
+        Node leftleft = new Node();
+        leftleft.data = 1;
+        Node leftright = new Node();
+        leftright.data = 2;
+        left.left = leftleft;
+        left.right = leftright;
+
+
+        root.left = left;
+        Node right = new Node();
+        right.data = 6;
+
+
+
+
+        root.right = right;
+
+
+        Node rightleft = new Node();
+        rightleft.data = 5;
+        Node rightright = new Node();
+        rightright.data = 7;
+        right.left = rightleft;
+        right.right = rightright;
+
+        return root;
+    }
+
+
+
     class MinMax {
         int min;
         int max;
@@ -104,7 +141,8 @@ public class CheckBST {
             MinMax left = checkNode(node.left);
             MinMax right = checkNode(node.right);
             MinMax here = new MinMax();
-            here.check = left.max < node.data && node.data < right.min;
+            here.check = left.max < node.data && node.data < right.min &&
+            left.check && right.check;
             here.min = left.min;
             here.max = right.max;
             return here;
@@ -113,14 +151,14 @@ public class CheckBST {
         } else if (node.right == null){
             MinMax left = checkNode(node.left);
             MinMax here = new MinMax();
-            here.check = left.max < node.data;
+            here.check = left.max < node.data && left.check;
             here.min = left.min;
             here.max = node.data;
             return here;
         } else {
             MinMax right = checkNode(node.right);
             MinMax here = new MinMax();
-            here.check =  node.data < right.min;
+            here.check =  node.data < right.min && right.check;
             here.max = right.max;
             here.min = node.data;
 
